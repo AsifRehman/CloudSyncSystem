@@ -14,10 +14,6 @@ namespace CloudSyncSystem
         static string party_del_ts = "0";
         static string ledger_ts = "0";
         static string ledger_del_ts = "0";
-        static string receipt_ts = "0";
-        static string receipt_del_ts = "0";
-        static string payment_ts = "0";
-        static string payment_del_ts = "0";
         static MongoHelper db;
 
         public Form1()
@@ -39,21 +35,22 @@ namespace CloudSyncSystem
         private async Task PartyUpdate(bool isStart = false)
         {
             //1
-            party_ts = isStart ? "0" : db.MaxTs("Party");
+            party_ts = isStart ? "0" : await db.MaxTs("Party");
             //2
             SqlHelper h = new SqlHelper();
             SqlDataReader dr = await h.GetReaderBySQL("SELECT * FROM web_vw_party WHERE ts>" + party_ts + " Order By ts");
             //3
             while (dr.Read())
             {
-                AddToPartyCollection(dr);
+                await AddToPartyCollection(dr);
+                lblStat.Text = "Running Party_Update Batch Operation till " + dr.GetInt32(8).ToString() + " timestamp";
             }
             dr.Close();
             ///////////////////////////////////////////////////END PARTY ALGORITHM/////////////////////////////////////////////////////////////////
             lblStat.Text = "Running Party_Update Batch Operation till " + party_ts + " timestamp";
 
         }
-        private async static void AddToPartyCollection(SqlDataReader sqlReader)
+        private async static Task AddToPartyCollection(SqlDataReader sqlReader)
         {
             Party p = new Party();
             p.Id = sqlReader.GetInt32(0);
@@ -65,11 +62,7 @@ namespace CloudSyncSystem
             p.Mobile1 = sqlReader.IsDBNull(6) ? null : sqlReader.GetString(6);
             p.Mobile2 = sqlReader.IsDBNull(7) ? null : sqlReader.GetString(7);
             p.ts = sqlReader.GetInt32(8);
-            //var result = db.LoadRecordById<Party>("Party", p.Id);
-            //if (result == null)
-            //    db.InsertRecord<Party>("Party", p);
-            //else
-                await db.UpsertRecord<Party>("Party", p.Id, p);
+            await db.UpsertRecord<Party>("Party", p.Id, p);
             party_ts = p.ts.ToString();
         }
 
@@ -79,7 +72,7 @@ namespace CloudSyncSystem
         private async Task PartyDelete()
         {
             //1
-            party_del_ts = db.MaxTs("Party_Del");
+            party_del_ts = await db.MaxTs("Party_Del");
             //2
             SqlHelper h = new SqlHelper();
             SqlDataReader dr = await h.GetReaderBySQL("SELECT DelId, ts FROM tbl_party_del WHERE ts>" + party_del_ts + " Order By ts");
@@ -109,7 +102,7 @@ namespace CloudSyncSystem
         {
             ////////////////////////////////////////////////////////Ledger ALGORITHM////////////////////////////////////////////////////////////////
             //1
-            ledger_ts = isStart ? "0" : db.MaxTs("Ledger");
+            ledger_ts = isStart ? "0" : await db.MaxTs("Ledger");
             //2
             SqlHelper h = new SqlHelper();
             SqlDataReader dr = await h.GetReaderBySQL("SELECT * FROM web_vw_ledger WHERE ts>" + ledger_ts + " Order By ts");
@@ -168,7 +161,7 @@ namespace CloudSyncSystem
         private async Task LedgerDelete()
         {
             //1
-            ledger_del_ts = db.MaxTs("Ledger_Del");
+            ledger_del_ts = await db.MaxTs("Ledger_Del");
             //2
             SqlHelper h = new SqlHelper();
             SqlDataReader dr = await h.GetReaderBySQL("SELECT DelId,ts FROM tbl_ledger_del WHERE ts>" + ledger_del_ts + " Order By ts");

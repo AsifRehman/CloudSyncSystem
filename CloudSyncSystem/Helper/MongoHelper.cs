@@ -31,10 +31,10 @@ namespace CloudSyncSystem
             return col.Find(new BsonDocument()).ToList();
         }
 
-        public string MaxTs(string table)
+        public async Task<string> MaxTs(string table)
         {
             var col = db.GetCollection<BsonDocument>(table);
-            var result = col.Find(new BsonDocument()).SortByDescending(m => m["ts"]).Limit(1).FirstOrDefault();
+            var result = await col.Find(new BsonDocument()).SortByDescending(m => m["ts"]).Limit(1).FirstOrDefaultAsync();
             if (result == null)
                 return "0";
             else
