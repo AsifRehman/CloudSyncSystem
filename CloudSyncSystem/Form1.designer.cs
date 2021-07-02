@@ -43,12 +43,14 @@ namespace CloudSyncSystem
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.btnTest = new System.Windows.Forms.Button();
             this.btnUpdateReceipt = new System.Windows.Forms.Button();
             this.btnDelReceipt = new System.Windows.Forms.Button();
             this.btnUpdatePayment = new System.Windows.Forms.Button();
             this.btnDelPayment = new System.Windows.Forms.Button();
             this.btnUpdatePartyFromStart = new System.Windows.Forms.Button();
+            this.btnUpdateLedgerFromStart = new System.Windows.Forms.Button();
+            this.btnDeleteLedgerFromStart = new System.Windows.Forms.Button();
+            this.btnDeletePartyFromStart = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -171,16 +173,6 @@ namespace CloudSyncSystem
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // btnTest
-            // 
-            this.btnTest.Location = new System.Drawing.Point(516, 177);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(109, 23);
-            this.btnTest.TabIndex = 0;
-            this.btnTest.Text = "Test";
-            this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
-            // 
             // btnUpdateReceipt
             // 
             this.btnUpdateReceipt.Location = new System.Drawing.Point(69, 275);
@@ -189,6 +181,7 @@ namespace CloudSyncSystem
             this.btnUpdateReceipt.TabIndex = 0;
             this.btnUpdateReceipt.Text = "Update Receipt";
             this.btnUpdateReceipt.UseVisualStyleBackColor = true;
+            this.btnUpdateReceipt.Visible = false;
             this.btnUpdateReceipt.Click += new System.EventHandler(this.btnUpdateReceipt_Click);
             // 
             // btnDelReceipt
@@ -199,6 +192,7 @@ namespace CloudSyncSystem
             this.btnDelReceipt.TabIndex = 0;
             this.btnDelReceipt.Text = "Delete Receipt";
             this.btnDelReceipt.UseVisualStyleBackColor = true;
+            this.btnDelReceipt.Visible = false;
             this.btnDelReceipt.Click += new System.EventHandler(this.btnDelReceipt_Click);
             // 
             // btnUpdatePayment
@@ -209,6 +203,7 @@ namespace CloudSyncSystem
             this.btnUpdatePayment.TabIndex = 0;
             this.btnUpdatePayment.Text = "Update Payment";
             this.btnUpdatePayment.UseVisualStyleBackColor = true;
+            this.btnUpdatePayment.Visible = false;
             this.btnUpdatePayment.Click += new System.EventHandler(this.btnUpdatePayment_Click);
             // 
             // btnDelPayment
@@ -219,6 +214,7 @@ namespace CloudSyncSystem
             this.btnDelPayment.TabIndex = 0;
             this.btnDelPayment.Text = "Delete Payment";
             this.btnDelPayment.UseVisualStyleBackColor = true;
+            this.btnDelPayment.Visible = false;
             this.btnDelPayment.Click += new System.EventHandler(this.btnDelPayment_Click);
             // 
             // btnUpdatePartyFromStart
@@ -231,6 +227,36 @@ namespace CloudSyncSystem
             this.btnUpdatePartyFromStart.UseVisualStyleBackColor = true;
             this.btnUpdatePartyFromStart.Click += new System.EventHandler(this.btnUpdatePartyFromStart_Click);
             // 
+            // btnUpdateLedgerFromStart
+            // 
+            this.btnUpdateLedgerFromStart.Location = new System.Drawing.Point(202, 216);
+            this.btnUpdateLedgerFromStart.Name = "btnUpdateLedgerFromStart";
+            this.btnUpdateLedgerFromStart.Size = new System.Drawing.Size(166, 23);
+            this.btnUpdateLedgerFromStart.TabIndex = 0;
+            this.btnUpdateLedgerFromStart.Text = "Update Ledger From Start";
+            this.btnUpdateLedgerFromStart.UseVisualStyleBackColor = true;
+            this.btnUpdateLedgerFromStart.Click += new System.EventHandler(this.btnUpdateLedgerFromStart_Click);
+            // 
+            // btnDeleteLedgerFromStart
+            // 
+            this.btnDeleteLedgerFromStart.Location = new System.Drawing.Point(202, 245);
+            this.btnDeleteLedgerFromStart.Name = "btnDeleteLedgerFromStart";
+            this.btnDeleteLedgerFromStart.Size = new System.Drawing.Size(166, 23);
+            this.btnDeleteLedgerFromStart.TabIndex = 0;
+            this.btnDeleteLedgerFromStart.Text = "Delete Ledger From Start";
+            this.btnDeleteLedgerFromStart.UseVisualStyleBackColor = true;
+            this.btnDeleteLedgerFromStart.Click += new System.EventHandler(this.btnDeleteLedgerFromStart_Click);
+            // 
+            // btnDeletePartyFromStart
+            // 
+            this.btnDeletePartyFromStart.Location = new System.Drawing.Point(202, 187);
+            this.btnDeletePartyFromStart.Name = "btnDeletePartyFromStart";
+            this.btnDeletePartyFromStart.Size = new System.Drawing.Size(166, 23);
+            this.btnDeletePartyFromStart.TabIndex = 13;
+            this.btnDeletePartyFromStart.Text = "Delete Party From Start";
+            this.btnDeletePartyFromStart.UseVisualStyleBackColor = true;
+            this.btnDeletePartyFromStart.Click += new System.EventHandler(this.btnDeletePartyFromStart_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -238,18 +264,20 @@ namespace CloudSyncSystem
             this.BackgroundImage = global::CloudSyncSystem.Properties.Resources.background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(777, 450);
+            this.Controls.Add(this.btnDeletePartyFromStart);
             this.Controls.Add(this.btnUpdatePartyFromStart);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnStopTimer);
             this.Controls.Add(this.btnStartTimer);
             this.Controls.Add(this.btn_ManualSync);
-            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnDelPayment);
             this.Controls.Add(this.btnUpdatePayment);
             this.Controls.Add(this.btnDelReceipt);
             this.Controls.Add(this.btnUpdateReceipt);
             this.Controls.Add(this.button5);
+            this.Controls.Add(this.btnDeleteLedgerFromStart);
+            this.Controls.Add(this.btnUpdateLedgerFromStart);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.btnUpdateParty);
@@ -279,12 +307,14 @@ namespace CloudSyncSystem
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Button btnUpdateReceipt;
         private System.Windows.Forms.Button btnDelReceipt;
         private System.Windows.Forms.Button btnUpdatePayment;
         private System.Windows.Forms.Button btnDelPayment;
         private System.Windows.Forms.Button btnUpdatePartyFromStart;
+        private System.Windows.Forms.Button btnUpdateLedgerFromStart;
+        private System.Windows.Forms.Button btnDeleteLedgerFromStart;
+        private System.Windows.Forms.Button btnDeletePartyFromStart;
     }
 }
 

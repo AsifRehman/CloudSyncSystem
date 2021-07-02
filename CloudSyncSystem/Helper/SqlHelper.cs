@@ -30,7 +30,7 @@ namespace CloudSyncSystem
             try
             {
 
-                mstr_ConnectionString = ConfigurationManager.ConnectionStrings["Db1"].ConnectionString.Replace("sqlPass","sqlPass^321~");
+                mstr_ConnectionString = ConfigurationManager.ConnectionStrings["Db1"].ConnectionString.Replace("sqlPass", "sqlPass^321~");
 
                 mobj_SqlConnection = new SqlConnection(mstr_ConnectionString);
                 mobj_SqlCommand = new SqlCommand();
@@ -97,6 +97,30 @@ namespace CloudSyncSystem
                 mobj_SqlCommand.Connection = mobj_SqlConnection;
                 identity = mobj_SqlCommand.ExecuteScalar();
                 CloseConnection();
+            }
+            catch (Exception ex)
+            {
+                CloseConnection();
+                throw ex;
+            }
+            return Convert.ToInt32(identity);
+        }
+
+        public async Task<int> GetExecuteScalarByStr(string sql)
+        {
+
+
+            object identity = 0;
+            try
+            {
+                SqlCommand cmd = new SqlCommand(sql);
+                cmd.CommandType = CommandType.Text;
+
+                OpenConnection();
+
+                cmd.Connection = mobj_SqlConnection;
+                identity = await cmd.ExecuteScalarAsync();
+                //CloseConnection();
             }
             catch (Exception ex)
             {

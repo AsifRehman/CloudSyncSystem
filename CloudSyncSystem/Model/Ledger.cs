@@ -9,8 +9,8 @@ namespace CloudSyncSystem.Model
         [BsonId]
         [BsonIgnoreIfDefault]
         public int Id { get; set; }
-        [BsonElement("PartyID")]
-        public int PartyID { get; set; }
+        [BsonElement("PartyId")]
+        public int PartyId { get; set; }
         [BsonElement("VocNo")]
         public int? VocNo { get; set; }
         [BsonElement("Date")]
