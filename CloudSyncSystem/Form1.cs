@@ -35,7 +35,8 @@ namespace CloudSyncSystem
         private async Task PartyUpdate(bool isStart = false)
         {
             //1
-            party_ts = isStart ? "0" : await db.MaxTs("Party");
+            if (party_ts == "0")
+                party_ts = isStart ? "0" : await db.MaxTs("Party");
             //2
             SqlHelper h = new SqlHelper();
             int cur = 1;
@@ -82,7 +83,8 @@ namespace CloudSyncSystem
         private async Task PartyDelete(bool isStart = false)
         {
             //1
-            party_del_ts = isStart ? "0" : await db.MaxTs("Party_Del");
+            if (party_del_ts == "0")
+                party_del_ts = isStart ? "0" : await db.MaxTs("Party_Del");
             //2
             SqlHelper h = new SqlHelper();
             int cur = 0;
@@ -121,7 +123,8 @@ namespace CloudSyncSystem
         {
             ////////////////////////////////////////////////////////Ledger ALGORITHM////////////////////////////////////////////////////////////////
             //1
-            ledger_ts = isStart ? "0" : await db.MaxTs("Ledger");
+            if (ledger_ts == "0")
+                ledger_ts = isStart ? "0" : await db.MaxTs("Ledger");
             //2
             SqlHelper h = new SqlHelper();
             int cur = 0;
@@ -190,7 +193,8 @@ namespace CloudSyncSystem
         private async Task LedgerDelete(bool isStart = false)
         {
             //1
-            ledger_del_ts = isStart ? "0" : await db.MaxTs("Ledger_Del");
+            if (ledger_del_ts == "0")
+                ledger_del_ts = isStart ? "0" : await db.MaxTs("Ledger_Del");
             //2
             SqlHelper h = new SqlHelper();
             int cur = 0;
@@ -239,12 +243,16 @@ namespace CloudSyncSystem
                 lblStat.Text = "Running Party_Update Batch Operation";
                 lblStat.ForeColor = Color.LightGoldenrodYellow;
                 await PartyUpdate();
+                await Task.Delay(1000);
                 lblStat.Text = "Running Party_Delete Batch Operation";
                 await PartyDelete();
+                await Task.Delay(1000);
                 lblStat.Text = "Running Ledger_Update Batch Operation";
                 await LedgerUpdate();
+                await Task.Delay(1000);
                 lblStat.Text = "Running Ledger_Delete Batch Operation";
                 await LedgerDelete();
+                await Task.Delay(1000);
                 lblStat.Text = "All Batch Operations Completed.";
                 lblStat.ForeColor = Color.DarkGreen;
             }
