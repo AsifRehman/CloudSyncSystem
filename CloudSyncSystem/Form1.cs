@@ -1,15 +1,18 @@
-﻿using System;
+﻿using CloudSyncSystem.Model;
+using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CloudSyncSystem.Model;
 
 namespace CloudSyncSystem
 {
     public partial class Form1 : Form
     {
+
+        static string partytype_ts = "0";
+        static string partytype_del_ts = "0";
         static string party_ts = "0";
         static string party_del_ts = "0";
         static string ledger_ts = "0";
@@ -117,6 +120,97 @@ namespace CloudSyncSystem
             party_del_ts = p.ts.ToString();
         }
         #endregion
+
+        #region PartyType Update Algorithm
+        private async Task PartyTypeUpdate(bool isStart = false)
+        {
+            //1
+            if (partytype_ts == "0")
+                partytype_ts = isStart ? "0" : await db.MaxTs("PartyType");
+            //2
+            SqlHelper h = new SqlHelper();
+            int cur = 1;
+            int tot = await h.GetExecuteScalarByStr("SELECT count(*) as cnt from web_vw_PartyType WHERE ts>" + partytype_ts);
+            if (tot == 0)
+            {
+                lblStat.Text = "PartyType_Update Operation already Up to Date";
+                return;
+            }
+            SqlDataReader dr = await h.GetReaderBySQL("SELECT * FROM web_vw_PartyType WHERE ts>" + partytype_ts + " Order By ts");
+            //3
+            while (dr.Read())
+            {
+                await AddToPartyTypeCollection(dr, isStart);
+                lblStat.Text = "Running PartyType_Update Batch Operation: " + cur++.ToString() + " of " + tot.ToString() + " updated.";
+            }
+            dr.Close();
+            ///////////////////////////////////////////////////END PartyType ALGORITHM/////////////////////////////////////////////////////////////////
+            lblStat.Text = "Running PartyType_Update Batch Operation Completed: " + tot.ToString() + " updated.";
+
+        }
+        private async static Task AddToPartyTypeCollection(SqlDataReader sqlReader, bool isStart = false)
+        {
+            PartyType p = new PartyType();
+            p.Id = sqlReader.GetInt32(0);
+            p.PartyTypeName = sqlReader.GetString(1);
+            if (sqlReader.IsDBNull(2))
+            {
+                p.PartyGroup = null;
+            }
+            else
+            {
+                p.PartyGroup = sqlReader.GetString(2);
+            }
+            
+            p.ts = sqlReader.GetInt32(3);
+            if (isStart)
+                await db.InsertRecord<PartyType>("PartyType", p);
+            else
+                await db.UpsertRecord<PartyType>("PartyType", p.Id, p);
+            partytype_ts = p.ts.ToString();
+        }
+
+        #endregion
+
+        #region PartyType Delete Algorithm
+        private async Task PartyTypeDelete(bool isStart = false)
+        {
+            //1
+            if (partytype_del_ts == "0")
+                partytype_del_ts = isStart ? "0" : await db.MaxTs("PartyType_Del");
+            //2
+            SqlHelper h = new SqlHelper();
+            int cur = 0;
+            int tot = await h.GetExecuteScalarByStr("SELECT count(*) as cnt from tbl_PartyType_del WHERE ts>" + partytype_del_ts);
+            if (tot == 0)
+            {
+                lblStat.Text = "PartyType_Delete Operation already Up to Date";
+                return;
+            }
+            SqlDataReader dr = await h.GetReaderBySQL("SELECT DelId,ts FROM tbl_PartyType_del WHERE ts>" + partytype_del_ts + " Order By ts");
+            //3
+            while (dr.Read())
+            {
+                await AddToPartyTypeDelCollection(dr);
+                lblStat.Text = "Running PartyType_Delete Batch Operation: " + cur++.ToString() + " of " + tot.ToString() + " updated.";
+            }
+            dr.Close();
+            ///////////////////////////////////////////////////END PartyType ALGORITHM/////////////////////////////////////////////////////////////////
+            lblStat.Text = "Running PartyType_Delete Batch Operation Completed: " + tot.ToString() + " updated.";
+
+        }
+
+        private async static Task AddToPartyTypeDelCollection(SqlDataReader sqlReader)
+        {
+            PartyType_Del p = new PartyType_Del();
+            p.DelId = sqlReader.GetInt32(0);
+            p.ts = sqlReader.GetInt32(1);
+            await db.DeleteRecord<PartyType>("PartyType", p.DelId);
+            await db.InsertRecord<PartyType_Del>("PartyType_Del", p);
+            partytype_del_ts = p.ts.ToString();
+        }
+        #endregion
+
 
         #region Ledger Update Algorithm
         private async Task LedgerUpdate(bool isStart = false)
@@ -228,6 +322,7 @@ namespace CloudSyncSystem
         }
         #endregion
 
+
         private async void btnUpdateParty_Click(object sender, EventArgs e)
         {
             await PartyUpdate();
@@ -240,6 +335,14 @@ namespace CloudSyncSystem
         {
             try
             {
+                lblStat.Text = "Running PartyType_Update Batch Operation";
+                lblStat.ForeColor = Color.LightGoldenrodYellow;
+                await PartyTypeUpdate();
+                await Task.Delay(1000);
+                lblStat.Text = "Running PartyType_Delete Batch Operation";
+                await PartyTypeDelete();
+                await Task.Delay(1000);
+
                 lblStat.Text = "Running Party_Update Batch Operation";
                 lblStat.ForeColor = Color.LightGoldenrodYellow;
                 await PartyUpdate();
@@ -337,6 +440,16 @@ namespace CloudSyncSystem
         private async void btnDeleteLedgerFromStart_Click(object sender, EventArgs e)
         {
             await LedgerDelete(true);
+        }
+
+        private async void btnPartyTypeUpdate_Click(object sender, EventArgs e)
+        {
+            await PartyTypeUpdate();
+        }
+
+        private async void btnPartyTypeDel_Click(object sender, EventArgs e)
+        {
+            await PartyTypeDelete();
         }
     }
 }

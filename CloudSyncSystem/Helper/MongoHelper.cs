@@ -33,12 +33,12 @@ namespace CloudSyncSystem
 
         public async Task<string> MaxTs(string table)
         {
-            var col = db.GetCollection<BsonDocument>(table);
-            var result = await col.Find(new BsonDocument()).SortByDescending(m => m["ts"]).Limit(1).FirstOrDefaultAsync();
-            if (result == null)
-                return "0";
-            else
-                return result.GetValue("ts").ToString();
+                    var col = db.GetCollection<BsonDocument>(table);
+                    var result = await col.Find(new BsonDocument()).SortByDescending(m => m["ts"]).Limit(1).FirstOrDefaultAsync();
+                    if (result == null)
+                        return "0";
+                    else
+                        return result.GetValue("ts").ToString();
         }
         public async Task UpsertRecord<T>(string table, int id, T record)
         {

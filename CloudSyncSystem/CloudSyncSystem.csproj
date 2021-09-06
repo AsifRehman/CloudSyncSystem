@@ -86,7 +86,9 @@
     <Compile Include="Helper\SqlHelper.cs" />
     <Compile Include="Model\Ledger.cs" />
     <Compile Include="Model\Ledger_Del.cs" />
+    <Compile Include="Model\PartyType.cs" />
     <Compile Include="Model\Party.cs" />
+    <Compile Include="Model\PartyType_Del.cs" />
     <Compile Include="Model\Party_Del.cs" />
     <Compile Include="Model\Payment.cs" />
     <Compile Include="Model\Payment_Del.cs" />
