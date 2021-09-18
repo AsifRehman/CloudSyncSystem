@@ -47,10 +47,6 @@ namespace CloudSyncSystem
             this.btnDelReceipt = new System.Windows.Forms.Button();
             this.btnUpdatePayment = new System.Windows.Forms.Button();
             this.btnDelPayment = new System.Windows.Forms.Button();
-            this.btnUpdatePartyFromStart = new System.Windows.Forms.Button();
-            this.btnUpdateLedgerFromStart = new System.Windows.Forms.Button();
-            this.btnDeleteLedgerFromStart = new System.Windows.Forms.Button();
-            this.btnDeletePartyFromStart = new System.Windows.Forms.Button();
             this.btnPartyTypeDel = new System.Windows.Forms.Button();
             this.btnPartyTypeUpdate = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
@@ -96,7 +92,7 @@ namespace CloudSyncSystem
             // 
             this.btnStartTimer.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.btnStartTimer.Enabled = false;
-            this.btnStartTimer.Location = new System.Drawing.Point(218, 64);
+            this.btnStartTimer.Location = new System.Drawing.Point(219, 64);
             this.btnStartTimer.Name = "btnStartTimer";
             this.btnStartTimer.Size = new System.Drawing.Size(166, 23);
             this.btnStartTimer.TabIndex = 3;
@@ -220,46 +216,6 @@ namespace CloudSyncSystem
             this.btnDelPayment.Visible = false;
             this.btnDelPayment.Click += new System.EventHandler(this.btnDelPayment_Click);
             // 
-            // btnUpdatePartyFromStart
-            // 
-            this.btnUpdatePartyFromStart.Location = new System.Drawing.Point(218, 142);
-            this.btnUpdatePartyFromStart.Name = "btnUpdatePartyFromStart";
-            this.btnUpdatePartyFromStart.Size = new System.Drawing.Size(166, 23);
-            this.btnUpdatePartyFromStart.TabIndex = 13;
-            this.btnUpdatePartyFromStart.Text = "Update Party From Start";
-            this.btnUpdatePartyFromStart.UseVisualStyleBackColor = true;
-            this.btnUpdatePartyFromStart.Click += new System.EventHandler(this.btnUpdatePartyFromStart_Click);
-            // 
-            // btnUpdateLedgerFromStart
-            // 
-            this.btnUpdateLedgerFromStart.Location = new System.Drawing.Point(218, 193);
-            this.btnUpdateLedgerFromStart.Name = "btnUpdateLedgerFromStart";
-            this.btnUpdateLedgerFromStart.Size = new System.Drawing.Size(166, 23);
-            this.btnUpdateLedgerFromStart.TabIndex = 0;
-            this.btnUpdateLedgerFromStart.Text = "Update Ledger From Start";
-            this.btnUpdateLedgerFromStart.UseVisualStyleBackColor = true;
-            this.btnUpdateLedgerFromStart.Click += new System.EventHandler(this.btnUpdateLedgerFromStart_Click);
-            // 
-            // btnDeleteLedgerFromStart
-            // 
-            this.btnDeleteLedgerFromStart.Location = new System.Drawing.Point(218, 219);
-            this.btnDeleteLedgerFromStart.Name = "btnDeleteLedgerFromStart";
-            this.btnDeleteLedgerFromStart.Size = new System.Drawing.Size(166, 23);
-            this.btnDeleteLedgerFromStart.TabIndex = 0;
-            this.btnDeleteLedgerFromStart.Text = "Delete Ledger From Start";
-            this.btnDeleteLedgerFromStart.UseVisualStyleBackColor = true;
-            this.btnDeleteLedgerFromStart.Click += new System.EventHandler(this.btnDeleteLedgerFromStart_Click);
-            // 
-            // btnDeletePartyFromStart
-            // 
-            this.btnDeletePartyFromStart.Location = new System.Drawing.Point(218, 167);
-            this.btnDeletePartyFromStart.Name = "btnDeletePartyFromStart";
-            this.btnDeletePartyFromStart.Size = new System.Drawing.Size(166, 23);
-            this.btnDeletePartyFromStart.TabIndex = 13;
-            this.btnDeletePartyFromStart.Text = "Delete Party From Start";
-            this.btnDeletePartyFromStart.UseVisualStyleBackColor = true;
-            this.btnDeletePartyFromStart.Click += new System.EventHandler(this.btnDeletePartyFromStart_Click);
-            // 
             // btnPartyTypeDel
             // 
             this.btnPartyTypeDel.Location = new System.Drawing.Point(61, 117);
@@ -289,8 +245,6 @@ namespace CloudSyncSystem
             this.ClientSize = new System.Drawing.Size(698, 430);
             this.Controls.Add(this.btnPartyTypeDel);
             this.Controls.Add(this.btnPartyTypeUpdate);
-            this.Controls.Add(this.btnDeletePartyFromStart);
-            this.Controls.Add(this.btnUpdatePartyFromStart);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnStopTimer);
@@ -301,8 +255,6 @@ namespace CloudSyncSystem
             this.Controls.Add(this.btnDelReceipt);
             this.Controls.Add(this.btnUpdateReceipt);
             this.Controls.Add(this.button5);
-            this.Controls.Add(this.btnDeleteLedgerFromStart);
-            this.Controls.Add(this.btnUpdateLedgerFromStart);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.btnUpdateParty);
@@ -336,10 +288,6 @@ namespace CloudSyncSystem
         private System.Windows.Forms.Button btnDelReceipt;
         private System.Windows.Forms.Button btnUpdatePayment;
         private System.Windows.Forms.Button btnDelPayment;
-        private System.Windows.Forms.Button btnUpdatePartyFromStart;
-        private System.Windows.Forms.Button btnUpdateLedgerFromStart;
-        private System.Windows.Forms.Button btnDeleteLedgerFromStart;
-        private System.Windows.Forms.Button btnDeletePartyFromStart;
         private System.Windows.Forms.Button btnPartyTypeDel;
         private System.Windows.Forms.Button btnPartyTypeUpdate;
     }

@@ -41,6 +41,8 @@ namespace CloudSyncSystem
             if (party_ts == "0")
                 party_ts = isStart ? "0" : await db.MaxTs("Party");
             //2
+            if (party_ts == "0") isStart = true;
+
             SqlHelper h = new SqlHelper();
             int cur = 1;
             int tot = await h.GetExecuteScalarByStr("SELECT count(*) as cnt from web_vw_Party WHERE ts>" + party_ts);
@@ -220,6 +222,8 @@ namespace CloudSyncSystem
             if (ledger_ts == "0")
                 ledger_ts = isStart ? "0" : await db.MaxTs("Ledger");
             //2
+            if (ledger_ts == "0") isStart = true;
+
             SqlHelper h = new SqlHelper();
             int cur = 0;
             int tot = await h.GetExecuteScalarByStr("SELECT count(*) as cnt from web_vw_Ledger WHERE ts>" + ledger_ts);
@@ -420,26 +424,6 @@ namespace CloudSyncSystem
         private void btnDelPayment_Click(object sender, EventArgs e)
         {
             //await PaymentDelete();
-        }
-
-        private async void btnUpdatePartyFromStart_Click(object sender, EventArgs e)
-        {
-            await PartyUpdate(true);
-        }
-
-        private async void btnUpdateLedgerFromStart_Click(object sender, EventArgs e)
-        {
-            await LedgerUpdate(true);
-        }
-
-        private async void btnDeletePartyFromStart_Click(object sender, EventArgs e)
-        {
-            await PartyDelete(true);
-        }
-
-        private async void btnDeleteLedgerFromStart_Click(object sender, EventArgs e)
-        {
-            await LedgerDelete(true);
         }
 
         private async void btnPartyTypeUpdate_Click(object sender, EventArgs e)
